@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b71c1c"/>
+      <stop offset="50%" stop-color="#e53935"/>
+      <stop offset="100%" stop-color="#d32f2f"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded card -->
+  <rect width="512" height="512" rx="100" fill="url(#bgGrad)"/>
+  
+  <!-- Outer glowing border -->
+  <rect x="16" y="16" width="480" height="480" rx="88" fill="none" stroke="#ffffff" stroke-width="8" stroke-opacity="0.3"/>
+
+  <!-- Centered slanted oval -->
+  <g transform="translate(256,256) rotate(-22)">
+    <ellipse cx="0" cy="0" rx="200" ry="110" fill="#ffffff" filter="url(#shadow)"/>
+    <ellipse cx="0" cy="0" rx="188" ry="98" fill="#11141c"/>
+    
+    <!-- UNO 3D text -->
+    <text x="0" y="24" 
+          font-family="Arial Black, Impact, sans-serif" 
+          font-size="120" 
+          font-style="italic" 
+          font-weight="900" 
+          text-anchor="middle" 
+          fill="#fbc02d" 
+          stroke="#000000" 
+          stroke-width="8" 
+          letter-spacing="-4">UNO</text>
+  </g>
+  
+  <!-- Little 4-color dots in corners -->
+  <circle cx="70" cy="70" r="20" fill="#fbc02d" />
+  <circle cx="442" cy="70" r="20" fill="#1976d2" />
+  <circle cx="70" cy="442" r="20" fill="#2e7d32" />
+  <circle cx="442" cy="442" r="20" fill="#fbc02d" />
+</svg>
+

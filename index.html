@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UNO Score">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#11141c">
+  <meta name="description" content="Зручний додаток для підрахунку балів у настільній грі UNO для вас та ваших друзів. Забудьте про громіздкі гугл-таблиці!">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23d32f2f'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black, sans-serif' font-size='38' font-style='italic' fill='%23ffeb3b'>UNO</text></svg>">
+  <title>UNO Score Tracker — Підрахунок балів</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,800&family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Верхня панель навігації -->
+    <header class="app-header">
+      <div class="logo-group" id="btnLogo">
+        <div class="uno-badge">
+          <span class="uno-text">UNO</span>
+        </div>
+        <div class="logo-title">
+          <h1>SCORE TRACKER</h1>
+          <span class="subtitle" id="headerSubtitle">Підрахунок балів</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnHistory" class="icon-btn" title="Історія ігор" aria-label="Історія ігор">
+          <span>📜</span>
+        </button>
+        <button id="btnRules" class="icon-btn" title="Правила та вартість карт" aria-label="Правила">
+          <span>❓</span>
+        </button>
+        <button id="btnShareGame" class="icon-btn hidden" title="Поділитися грою / Експорт" aria-label="Поділитися">
+          <span>📤</span>
+        </button>
+        <button id="btnNewGamePrompt" class="icon-btn hidden" title="Нова гра" aria-label="Нова гра">
+          <span>🔄</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Головна область перемикання екранів -->
+    <main class="main-content">
+      
+      <!-- ЕКРАН 1: Налаштування нової гри -->
+      <section id="setupScreen" class="screen setup-screen active">
+        <div class="card setup-card">
+          <h2 class="section-title">🎮 Створення нової гри</h2>
+          
+          <!-- Вибір режиму гри -->
+          <div class="form-group">
+            <label class="form-label">Режим гри:</label>
+            <div class="game-mode-selector">
+              <label class="mode-card" for="modePenalty">
+                <input type="radio" id="modePenalty" name="gameMode" value="penalty" checked>
+                <div class="mode-content">
+                  <div class="mode-header">
+                    <span class="mode-icon">🛡️</span>
+                    <span class="mode-name">Штрафні бали (Пенальті)</span>
+                    <span class="badge badge-popular">Популярно</span>
+                  </div>
+                  <p class="mode-desc">
+                    Переможець раунду отримує <strong>0</strong>. Інші рахують свої залишені карти. 
+                    Хто перетинає ліміт — вибуває/завершує гру. <strong>Виграє той, у кого найменше балів!</strong>
+                  </p>
+                </div>
+              </label>
+
+              <label class="mode-card" for="modeClassic">
+                <input type="radio" id="modeClassic" name="gameMode" value="classic">
+                <div class="mode-content">
+                  <div class="mode-header">
+                    <span class="mode-icon">🏆</span>
+                    <span class="mode-name">Класичний режим</span>
+                  </div>
+                  <p class="mode-desc">
+                    Переможець раунду забирає <strong>суму всіх карт інших гравців</strong>. 
+                    Перший, хто набере 500 балів — перемагає у грі!
+                  </p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Ліміт балів -->
+          <div class="form-group">
+            <label class="form-label" id="targetScoreLabel">Ліміт балів для завершення гри:</label>
+            <div class="target-presets">
+              <button type="button" class="btn-preset active" data-target="500">500 (Стандарт)</button>
+              <button type="button" class="btn-preset" data-target="250">250</button>
+              <button type="button" class="btn-preset" data-target="100">100 (Швидка)</button>
+              <div class="custom-target-wrap">
+                <input type="number" id="customTargetScore" placeholder="Свій ліміт" min="10" max="9999" inputmode="numeric" class="input-field input-small">
+              </div>
+            </div>
+          </div>
+
+          <!-- Список гравців -->
+          <div class="form-group">
+            <label class="form-label">Гравці (від 2 до 12):</label>
+            
+            <div class="add-player-row">
+              <div class="avatar-select-wrap">
+                <button type="button" id="btnColorPicker" class="color-avatar-btn" style="background-color: #e53935;" title="Колір гравця">
+                  <span id="playerAvatarIcon">🔴</span>
+                </button>
+              </div>
+              <input type="text" id="newPlayerName" class="input-field" placeholder="Ім'я гравця (наприклад: Артем)" maxlength="20" autocomplete="off">
+              <button type="button" id="btnAddPlayer" class="btn btn-uno-red">
+                <span>➕ Додати</span>
+              </button>
+            </div>
+
+            <!-- Швидкі шаблони / попередні гравці -->
+            <div id="recentPlayersContainer" class="recent-players-wrap hidden">
+              <span class="hint-label">Швидке додавання:</span>
+              <div id="recentPlayersList" class="chips-list"></div>
+            </div>
+
+            <!-- Список доданих гравців -->
+            <div id="playersList" class="players-list">
+              <!-- Додаються динамічно через JS -->
+            </div>
+          </div>
+
+          <div class="setup-actions">
+            <button type="button" id="btnStartGame" class="btn btn-large btn-uno-green" disabled>
+              <span>🚀 Почати гру!</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ЕКРАН 2: Активна гра (Табло та Таблиця) -->
+      <section id="gameScreen" class="screen game-screen">
+        
+        <!-- Верхня панель гри: статус та статистика -->
+        <div class="game-meta-bar">
+          <div class="meta-item">
+            <span class="meta-label">Режим:</span>
+            <span class="meta-value" id="gameModeBadge">Пенальті</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Ціль:</span>
+            <span class="meta-value" id="gameLimitBadge">250 балів</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Раунд:</span>
+            <span class="meta-value highlight" id="currentRoundBadge">1</span>
+          </div>
+          <div class="meta-item ml-auto header-buttons-cluster">
+            <button id="btnToggleTableView" class="btn-compact">
+              <span id="viewModeIcon">📋</span> <span id="viewModeText">Таблиця</span>
+            </button>
+            <button id="btnEarlyFinish" class="btn-compact btn-finish" title="Достроково завершити гру та показати фінальні бали">
+              <span>🏁 Завершити гру</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Лідерборд / Картки гравців -->
+        <div id="leaderboardSection" class="leaderboard-section">
+          <div class="section-header-compact">
+            <h3>🏆 Поточне становище</h3>
+            <span class="sub-hint" id="leaderboardHint">Хто набере менше — перемагає</span>
+          </div>
+          
+          <div id="playersLeaderboard" class="leaderboard-grid">
+            <!-- Динамічно генерується картка кожного гравця -->
+          </div>
+        </div>
+
+        <!-- Кнопка швидкого додавання раунду -->
+        <div class="quick-action-strip">
+          <button id="btnOpenAddRoundModal" class="btn btn-large btn-uno-yellow pulse-button">
+            <span class="btn-icon">⚡</span>
+            <span class="btn-text">Записати результат раунду</span>
+          </button>
+        </div>
+
+        <!-- Повна таблиця балів (як у Google Таблиці, але крутіше) -->
+        <div id="scoreTableSection" class="score-table-section card">
+          <div class="table-header-row">
+            <h3>📊 Таблиця раундів</h3>
+            <div class="table-actions">
+              <button id="btnUndoRound" class="btn-compact btn-ghost" title="Скасувати останній раунд">
+                <span>↩️ Скасувати останній</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-container">
+            <table id="unoScoreTable" class="uno-table">
+              <thead>
+                <tr id="tableHeaderRow">
+                  <th class="col-round">#</th>
+                  <!-- Колонки гравців генеруються динамічно -->
+                  <th class="col-actions">Дії</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <!-- Рядки раундів -->
+              </tbody>
+              <tfoot>
+                <tr id="tableFooterRow" class="total-row">
+                  <th class="col-round">ВСЬОГО</th>
+                  <!-- Підсумкові бали -->
+                  <th class="col-actions"></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div id="emptyTableMessage" class="empty-state">
+            <p>Ще немає зіграних раундів. Зіграйте першу роздачу та натисніть "Записати результат раунду"!</p>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Додавання / Редагування раунду -->
+    <div id="roundModal" class="modal-backdrop">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="roundModalTitle">📝 Запис раунду <span id="modalRoundNumber">1</span></h3>
+          <button type="button" class="modal-close" data-close="roundModal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Крок 1: Хто виграв раунд -->
+          <div class="round-step-box">
+            <div class="step-title">
+              <span class="step-badge">1</span>
+              <span>Хто скинув усі карти (Переможець раунду)?</span>
+            </div>
+            <div id="roundWinnerSelector" class="round-winner-chips">
+              <!-- Кнопки гравців генеруються динамічно -->
+            </div>
+          </div>
+
+          <!-- Крок 2: Бали інших гравців -->
+          <div class="round-step-box">
+            <div class="step-title">
+              <span class="step-badge">2</span>
+              <span>Бали на руках у інших гравців:</span>
+            </div>
+            <p class="step-hint" id="roundStepHint">
+              Переможець отримує 0. Для решти гравців введіть суму карт або скористайтесь калькулятором!
+            </p>
+
+            <div id="roundPlayersInputs" class="round-players-inputs-list">
+              <!-- Інпути для кожного гравця з кнопкою калькулятора -->
+            </div>
+          </div>
+
+          <!-- Підсумкова сума раунду для контролю -->
+          <div class="round-summary-badge">
+            <span>Сума штрафних карт за раунд:</span>
+            <strong id="roundTotalSum">0</strong> балів
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close="roundModal">Скасувати</button>
+          <button type="button" id="btnSaveRound" class="btn btn-uno-green">
+            <span>💾 Зберегти раунд</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Калькулятор карт UNO -->
+    <div id="calcModal" class="modal-backdrop">
+      <div class="modal-dialog modal-calc">
+        <div class="modal-header">
+          <h3>🃏 Калькулятор карт для: <span id="calcPlayerName" class="highlight">Артем</span></h3>
+          <button type="button" class="modal-close" data-close="calcModal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="calc-display">
+            <div class="calc-formula" id="calcFormula">Виберіть карти, що залишились у руці:</div>
+            <div class="calc-total-wrap">
+              <span class="calc-label">Разом:</span>
+              <span class="calc-big-sum" id="calcTotalSum">0</span>
+              <span class="calc-pts">балів</span>
+            </div>
+          </div>
+
+          <div class="calc-grid-section">
+            <span class="calc-section-label">Цифрові карти (за номіналом):</span>
+            <div class="cards-grid number-cards-grid">
+              <button type="button" class="uno-card-btn num-card" data-val="0"><span>0</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="1"><span>1</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="2"><span>2</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="3"><span>3</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="4"><span>4</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="5"><span>5</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="6"><span>6</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="7"><span>7</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="8"><span>8</span></button>
+              <button type="button" class="uno-card-btn num-card" data-val="9"><span>9</span></button>
+            </div>
+
+            <span class="calc-section-label">Активні карти (по 20 балів):</span>
+            <div class="cards-grid action-cards-grid">
+              <button type="button" class="uno-card-btn action-card card-plus2" data-val="20" data-label="+2">
+                <span class="card-title">+2</span>
+                <span class="card-sub">20 б.</span>
+              </button>
+              <button type="button" class="uno-card-btn action-card card-reverse" data-val="20" data-label="Зміна">
+                <span class="card-title">⇄</span>
+                <span class="card-sub">20 б.</span>
+              </button>
+              <button type="button" class="uno-card-btn action-card card-skip" data-val="20" data-label="Пропуск">
+                <span class="card-title">⊘</span>
+                <span class="card-sub">20 б.</span>
+              </button>
+            </div>
+
+            <span class="calc-section-label">Дикі карти (по 50 балів):</span>
+            <div class="cards-grid wild-cards-grid">
+              <button type="button" class="uno-card-btn wild-card card-wild" data-val="50" data-label="Дика">
+                <span class="card-title">🌈</span>
+                <span class="card-sub">50 б.</span>
+              </button>
+              <button type="button" class="uno-card-btn wild-card card-wild4" data-val="50" data-label="Дика +4">
+                <span class="card-title">+4 🌈</span>
+                <span class="card-sub">50 б.</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="calc-controls">
+            <button type="button" id="btnCalcClear" class="btn btn-ghost btn-small">🧹 Очистити</button>
+            <button type="button" id="btnCalcUndo" class="btn btn-ghost btn-small">↩️ Скасувати карту</button>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close="calcModal">Назад</button>
+          <button type="button" id="btnApplyCalc" class="btn btn-uno-yellow">
+            <span>✅ Застосувати (<span id="calcBtnSum">0</span> б.)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Перевищення ліміту (Вибір: +200 чи Завершення) -->
+    <div id="limitExceededModal" class="modal-backdrop">
+      <div class="modal-dialog modal-limit-exceeded">
+        <div class="modal-header limit-exceeded-header">
+          <h3>⚠️ ПЕРЕВИЩЕНО ЛІМІТ БАЛІВ!</h3>
+          <button type="button" class="modal-close" data-close="limitExceededModal">&times;</button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="exceeded-icon-wrap">
+            <span class="exceeded-fire-icon">🚨</span>
+          </div>
+          <h4 id="exceededPlayerMessage" class="exceeded-msg">
+            Гравець набрав більше ліміту!
+          </h4>
+          <p class="exceeded-subtext">
+            Поточний ліміт був: <strong id="exceededCurrentLimit">500</strong> б.<br>
+            Ви можете продовжити партію (новий ліміт стане <strong>+200</strong>) або підбити фінальні підсумки прямо зараз.
+          </p>
+
+          <div class="exceeded-choices-box">
+            <button type="button" id="btnExtendLimit" class="btn btn-large btn-uno-green btn-extend-choice">
+              <span class="btn-icon">🚀</span>
+              <div class="btn-extend-text">
+                <strong>Продовжити гру (+200 до ліміту)</strong>
+                <span class="btn-extend-sub">Новий ліміт гри стане: <span id="newTargetScorePreview">700</span> б.</span>
+              </div>
+            </button>
+
+            <button type="button" id="btnFinishGameNow" class="btn btn-large btn-ghost btn-finish-choice">
+              <span class="btn-icon">🏆</span>
+              <div class="btn-extend-text">
+                <strong>Завершити гру та підбити бали</strong>
+                <span class="btn-extend-sub">Визначити переможця за поточним лідербордом</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: ОЧКИ ЗГОРІЛИ! -->
+    <div id="burnModal" class="modal-backdrop burn-modal-backdrop">
+      <div class="modal-dialog modal-burn">
+        <div class="burn-stars-top">
+          <span class="burn-star">⭐</span><span class="burn-star">🌟</span><span class="burn-star">✨</span>
+          <span class="burn-star">🌟</span><span class="burn-star">⭐</span>
+        </div>
+        <div class="burn-body">
+          <div class="burn-skull">🎉</div>
+          <div class="burn-player-name" id="burnPlayerName">Іванко</div>
+          <div class="burn-subtitle">набрав(ла) рівно</div>
+          <div class="burn-score-pill">
+            <span id="burnLimitDisplay">500</span> балів
+          </div>
+          <div class="burn-arrow-wrap">
+            <div class="burn-score-before" id="burnScoreBefore">500</div>
+            <div class="burn-arrow">✨</div>
+            <div class="burn-score-after">0</div>
+          </div>
+          <div class="burn-announcement-text">
+            РАХУНОК<br><span class="burn-anulled">ОБНУЛЯЄТЬСЯ!</span>
+          </div>
+          <div class="burn-sub">Свіжий старт — нові можливості! 🚀</div>
+          <button id="btnCloseBurn" class="btn btn-burn-ok">
+            🎊 Чудово!
+          </button>
+        </div>
+        <div class="burn-stars-bottom">
+          <span class="burn-star">✨</span><span class="burn-star">⭐</span><span class="burn-star">🌟</span>
+          <span class="burn-star">⭐</span><span class="burn-star">✨</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Перемога / Завершення гри -->
+    <div id="gameOverModal" class="modal-backdrop">
+      <div class="modal-dialog modal-victory">
+        <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+        <div class="modal-header victory-header">
+          <h2 class="victory-title">🎉 ГРА ЗАВЕРШЕНА! 🎉</h2>
+          <button type="button" class="modal-close" data-close="gameOverModal">&times;</button>
+        </div>
+
+        <div class="modal-body text-center">
+          <div class="trophy-wrap">
+            <div class="big-trophy">🏆</div>
+            <div class="winner-crown">👑</div>
+          </div>
+          <h3 class="winner-label">ПЕРЕМОЖЕЦЬ:</h3>
+          <h1 id="winnerName" class="winner-name">Олександр</h1>
+          <p id="winnerScoreDetails" class="winner-score-desc">З результатом усього 42 бали за 6 раундів!</p>
+
+          <div class="final-standings-card">
+            <h4>Підсумковий рейтинг гравців:</h4>
+            <div id="finalStandingsList" class="final-standings-list">
+              <!-- Заповнюється в JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer victory-footer">
+          <button type="button" id="btnShareGameOver" class="btn btn-uno-blue">
+            <span>📤 Скопіювати результат у чат</span>
+          </button>
+          <button type="button" id="btnStartNewAfterVictory" class="btn btn-uno-green">
+            <span>🔄 Нова гра</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Правила гри та шпаргалка -->
+    <div id="rulesModal" class="modal-backdrop">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>📖 Правила та вартість карт UNO</h3>
+          <button type="button" class="modal-close" data-close="rulesModal">&times;</button>
+        </div>
+        <div class="modal-body rules-content">
+          <h4>Вартість карт при підрахунку:</h4>
+          <ul class="rules-cards-list">
+            <li>
+              <span class="badge-card badge-num">0 - 9</span>
+              <div class="desc">
+                <strong>Цифрові карти</strong>
+                <span>Очки дорівнюють номіналу карти (від 0 до 9 балів)</span>
+              </div>
+            </li>
+            <li>
+              <span class="badge-card badge-action">+2 / ⇄ / ⊘</span>
+              <div class="desc">
+                <strong>Активні карти дії</strong>
+                <span>Візьми дві (+2), Зміна напрямку ходу, Пропуск ходу — <strong>по 20 балів</strong> кожна</span>
+              </div>
+            </li>
+            <li>
+              <span class="badge-card badge-wild">🌈 / +4</span>
+              <div class="desc">
+                <strong>Дикі карти (Wild)</strong>
+                <span>Дика карта вибору кольору та Дика карта +4 — <strong>по 50 балів</strong> кожна</span>
+              </div>
+            </li>
+          </ul>
+
+          <h4>Як ми рахуємо очки:</h4>
+          <div class="rules-variant">
+            <h5>1. Штрафні очки (Пенальті) — Найзручніше для компанії:</h5>
+            <p>
+              Гравець, який першим скинув усі карти ("UNO!"), отримує <strong>0 очок</strong> (або бонусний мінус).
+              Усі інші рахують карти, які залишилися в них у руках. Бали підсумовуються від раунду до раунду.
+              Гра триває доти, доки хтось не набере ліміт (наприклад, 250 або 500). 
+              <strong>Перемагає той, хто набрав найменше очок!</strong>
+            </p>
+          </div>
+          <div class="rules-variant">
+            <h5>🔥 Правило згорання очок (Рівно ліміт = 0):</h5>
+            <p>
+              Якщо сума балів гравця стає <strong>рівно ${appState.targetScore || 500}</strong> (або обраний ліміт гри), 
+              усі його очки <strong>згорають і рахунок стає 0</strong>! 
+              Гравець продовжує гру з нулем штрафних. Додаток автоматично показує, скільки очок залишилося набрати кожному гравцю до згорання.
+            </p>
+          </div>
+          <div class="rules-variant">
+            <h5>🖤 Бонусне правило: Закінчення чорною картою (-50, -100, -150...):</h5>
+            <p>
+              Якщо переможець раунду скидає останню карту і закінчує гру <strong>чорною картою</strong> (Дика або Дика +4), 
+              він отримує <strong>-50 балів</strong> за кожну скинуту чорну карту!
+              Ці очки віднімаються від його штрафного рахунку (можна піти в мінус, наприклад <strong>-50, -100, -150</strong>), що дає сильну перевагу в грі.
+            </p>
+          </div>
+          <div class="rules-variant">
+            <h5>🚀 Перевищення ліміту та продовження гри (+200):</h5>
+            <p>
+              Якщо хтось набрав більше ліміту (наприклад, 501+ балів), з'являється плашка вибору: 
+              ви можете <strong>продовжити партію (ліміт збільшиться на +200 балів)</strong> або завершити гру та підбити фінальні результати. 
+              Також ви в будь-який момент можете завершити партію достроково кнопкою <strong>«🏁 Завершити гру»</strong> у верхній панелі.
+            </p>
+          </div>
+          <div class="rules-variant">
+            <h5>2. Класичні офіційні правила:</h5>
+            <p>
+              Переможець раунду забирає суму очок з карт усіх своїх суперників. 
+              Гра триває, поки хтось перший не набере 500 балів.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-uno-blue" data-close="rulesModal">Зрозуміло</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Поділитися / Експорт -->
+    <div id="shareModal" class="modal-backdrop">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>📤 Експорт та результат для чату</h3>
+          <button type="button" class="modal-close" data-close="shareModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2">Скопіюйте готовий текстовий підсумок для відправки в Telegram / Viber або завантажте CSV-файл для відкриття в Excel / Google Таблицях:</p>
+          
+          <div class="form-group">
+            <textarea id="shareTextarea" class="share-textarea" readonly rows="8"></textarea>
+          </div>
+
+          <div class="share-buttons-grid">
+            <button type="button" id="btnCopyShareText" class="btn btn-uno-yellow">
+              <span>📋 Скопіювати текст для чату</span>
+            </button>
+            <button type="button" id="btnDownloadCSV" class="btn btn-uno-green">
+              <span>📊 Завантажити CSV (Таблиця)</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close="shareModal">Закрити</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Історія ігор -->
+    <div id="historyModal" class="modal-backdrop">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>📜 Історія збережених ігор</h3>
+          <button type="button" class="modal-close" data-close="historyModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="historyGamesList" class="history-list">
+            <!-- Динамічно -->
+          </div>
+          <div id="emptyHistoryMessage" class="empty-state">
+            <p>Історія поки порожня. Зіграні ігри зберігатимуться тут автоматично!</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnClearHistory" class="btn btn-ghost btn-small text-danger">Очистити всю історію</button>
+          <button type="button" class="btn btn-uno-blue" data-close="historyModal">Закрити</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Тост-сповіщення -->
+    <div id="toastNotification" class="toast-notification"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,2289 @@
+/* ==========================================================================
+   UNO SCORE TRACKER - СТИЛІ ТА ДИЗАЙН
+   ========================================================================== */
+
+:root {
+  --uno-red: #e53935;
+  --uno-red-dark: #b71c1c;
+  --uno-red-light: #ff6f60;
+  
+  --uno-yellow: #fbc02d;
+  --uno-yellow-dark: #c49000;
+  --uno-yellow-light: #fff263;
+
+  --uno-green: #2e7d32;
+  --uno-green-dark: #1b5e20;
+  --uno-green-light: #60ad5e;
+
+  --uno-blue: #1976d2;
+  --uno-blue-dark: #0d47a1;
+  --uno-blue-light: #63a4ff;
+
+  --uno-purple: #8e24aa;
+  --uno-orange: #f57c00;
+  --uno-teal: #00897b;
+
+  --wild-gradient: linear-gradient(135deg, #e53935 25%, #1976d2 25% 50%, #2e7d32 50% 75%, #fbc02d 75%);
+
+  --bg-dark: #11141c;
+  --bg-card: #1c2230;
+  --bg-card-hover: #242c3d;
+  --bg-card-subtle: #161b26;
+
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-highlight: rgba(255, 255, 255, 0.2);
+
+  --font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-display: 'Rubik', 'Montserrat', sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 14px 28px rgba(0, 0, 0, 0.5);
+  --shadow-glow-red: 0 0 20px rgba(229, 57, 53, 0.4);
+  --shadow-glow-yellow: 0 0 20px rgba(251, 192, 45, 0.4);
+  --shadow-glow-green: 0 0 20px rgba(46, 125, 50, 0.4);
+}
+
+/* Скидання та база */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(229, 57, 53, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(25, 118, 210, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(46, 125, 50, 0.05) 0%, transparent 60%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* Контейнер додатку */
+.app-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px 40px;
+}
+
+/* Хедер додатку */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(28, 34, 48, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 10px;
+  z-index: 50;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.uno-badge {
+  background: var(--uno-red);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 10px rgba(229, 57, 53, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  transform: skewX(-10deg) rotate(-4deg);
+  border: 2px solid #fff;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-group:hover .uno-badge {
+  transform: skewX(-10deg) rotate(0deg) scale(1.08);
+}
+
+.uno-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--uno-yellow);
+  text-shadow: 2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
+  display: block;
+  letter-spacing: -1px;
+}
+
+.logo-title h1 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.logo-title .subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-highlight);
+  transform: translateY(-2px);
+}
+
+.icon-btn:active {
+  transform: translateY(1px);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Екрани */
+.screen {
+  display: none;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Карточки загальні */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Форми та інпути */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+/* Перемикач режиму гри */
+.game-mode-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 650px) {
+  .game-mode-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mode-card {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.mode-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.mode-content {
+  background: var(--bg-card-subtle);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: all 0.2s ease;
+  height: 100%;
+}
+
+.mode-card input[type="radio"]:checked + .mode-content {
+  border-color: var(--uno-yellow);
+  background: rgba(251, 192, 45, 0.08);
+  box-shadow: var(--shadow-glow-yellow);
+}
+
+.mode-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.mode-icon {
+  font-size: 1.3rem;
+}
+
+.mode-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.badge-popular {
+  background: var(--uno-red);
+  color: #fff;
+  margin-left: auto;
+}
+
+.mode-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Пресети ліміту */
+.target-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-preset {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-preset:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-highlight);
+}
+
+.btn-preset.active {
+  background: var(--uno-blue);
+  color: #fff;
+  border-color: var(--uno-blue-light);
+  box-shadow: 0 0 12px rgba(25, 118, 210, 0.5);
+}
+
+.custom-target-wrap {
+  flex: 1;
+  min-width: 140px;
+}
+
+.input-field {
+  width: 100%;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.input-field:focus {
+  border-color: var(--uno-yellow);
+  box-shadow: 0 0 10px rgba(251, 192, 45, 0.3);
+}
+
+.input-small {
+  padding: 10px 14px;
+}
+
+/* Додавання гравця */
+.add-player-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.avatar-select-wrap {
+  position: relative;
+}
+
+.color-avatar-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+
+.color-avatar-btn:hover {
+  transform: scale(1.05);
+}
+
+.players-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.player-item-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  transition: all 0.2s;
+}
+
+.player-item-badge:hover {
+  border-color: var(--border-highlight);
+}
+
+.player-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-dot {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.player-name-text {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.btn-remove-player {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.btn-remove-player:hover {
+  color: var(--uno-red);
+}
+
+.recent-players-wrap {
+  margin-bottom: 12px;
+}
+
+.hint-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed var(--border-color);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-color: #fff;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translateY(2px);
+}
+
+.btn-large {
+  width: 100%;
+  padding: 16px 28px;
+  font-size: 1.15rem;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-display);
+}
+
+.btn-compact {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.btn-compact:hover {
+  background: var(--bg-card-hover);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.btn-ghost:hover {
+  color: #fff;
+  border-color: var(--border-highlight);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-uno-red {
+  background: var(--uno-red);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
+}
+.btn-uno-red:hover { background: #f44336; }
+
+.btn-uno-green {
+  background: var(--uno-green);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+}
+.btn-uno-green:hover { background: #388e3c; }
+
+.btn-uno-yellow {
+  background: var(--uno-yellow);
+  color: #111;
+  box-shadow: 0 4px 12px rgba(251, 192, 45, 0.4);
+}
+.btn-uno-yellow:hover { background: #ffeb3b; }
+
+.btn-uno-blue {
+  background: var(--uno-blue);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+}
+.btn-uno-blue:hover { background: #2196f3; }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   ЕКРАН АКТИВНОЇ ГРИ
+   ========================================================================== */
+
+.game-meta-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  margin-bottom: 20px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.meta-label {
+  color: var(--text-muted);
+}
+
+.meta-value {
+  font-weight: 700;
+  color: #fff;
+}
+
+.meta-value.highlight {
+  color: var(--uno-yellow);
+  font-size: 1.1rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+/* Лідерборд картки */
+.leaderboard-section {
+  margin-bottom: 22px;
+}
+
+.section-header-compact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-header-compact h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.sub-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.leaderboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.player-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.player-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-highlight);
+}
+
+.player-card.rank-1 {
+  border-color: rgba(251, 192, 45, 0.5);
+  background: linear-gradient(180deg, rgba(251, 192, 45, 0.08) 0%, var(--bg-card) 60%);
+  box-shadow: 0 4px 16px rgba(251, 192, 45, 0.15);
+}
+
+.player-card.danger {
+  border-color: rgba(229, 57, 53, 0.6);
+  background: linear-gradient(180deg, rgba(229, 57, 53, 0.1) 0%, var(--bg-card) 60%);
+  animation: pulseDanger 2s infinite ease-in-out;
+}
+
+@keyframes pulseDanger {
+  0%, 100% { box-shadow: 0 0 10px rgba(229, 57, 53, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(229, 57, 53, 0.5); }
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-rank-badge {
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rank-1 .card-rank-badge {
+  background: var(--uno-yellow);
+  color: #111;
+}
+
+.player-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.player-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  font-weight: 900;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.player-meta {
+  overflow: hidden;
+}
+
+.player-card-name {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-badges-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-burns-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ff7043;
+  background: rgba(255, 87, 34, 0.15);
+  border: 1px solid rgba(255, 87, 34, 0.4);
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+}
+
+.player-rounds-won {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Блок згорання очок на картці */
+.burn-counter-strip {
+  background: rgba(10, 12, 18, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.burn-counter-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.burn-fire-icon {
+  font-size: 1rem;
+}
+
+.burn-caption {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.burn-counter-val {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--uno-yellow);
+}
+
+.burn-unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Коли гравець близько до згорання (<= 60 балів) */
+.burn-counter-strip.burn-close {
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.18) 0%, rgba(251, 192, 45, 0.12) 100%);
+  border-color: rgba(255, 152, 0, 0.6);
+  box-shadow: 0 0 14px rgba(255, 152, 0, 0.25);
+  animation: pulseFlame 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseFlame {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 112, 67, 0.2); }
+  50% { box-shadow: 0 0 18px rgba(255, 152, 0, 0.45); }
+}
+
+.burn-counter-strip.burn-close .burn-caption {
+  color: #ffab40;
+  font-weight: 700;
+}
+
+.burn-counter-strip.burn-close .burn-counter-val {
+  color: #ff9800;
+  font-size: 1.15rem;
+  text-shadow: 0 0 8px rgba(255, 152, 0, 0.5);
+}
+
+.score-display-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.score-big {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.score-pts {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.score-diff {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Прогрес бар до ліміту */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease-out;
+  background: var(--uno-blue);
+}
+
+.progress-fill.warn {
+  background: var(--uno-yellow);
+}
+
+.progress-fill.danger {
+  background: var(--uno-red);
+}
+
+/* Кнопка дії запису раунду */
+.quick-action-strip {
+  margin-bottom: 24px;
+}
+
+.pulse-button {
+  animation: subtlePulse 3s infinite ease-in-out;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 16px rgba(251, 192, 45, 0.4); }
+  50% { transform: scale(1.015); box-shadow: 0 8px 24px rgba(251, 192, 45, 0.6); }
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+/* ==========================================================================
+   ТАБЛИЦЯ БАЛІВ (ТАБЛИЧНИЙ ВИГЛЯД)
+   ========================================================================== */
+
+.score-table-section {
+  padding: 20px;
+}
+
+.table-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.table-header-row h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.table-responsive-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card-subtle);
+}
+
+.uno-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.uno-table th,
+.uno-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.uno-table th:last-child,
+.uno-table td:last-child {
+  border-right: none;
+}
+
+.uno-table thead th {
+  background: rgba(28, 34, 48, 0.95);
+  font-weight: 700;
+  color: var(--text-main);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.col-round {
+  width: 60px;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.player-th-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-th-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.uno-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cell-winner {
+  background: rgba(46, 125, 50, 0.25) !important;
+  color: #81c784;
+  font-weight: 800;
+}
+
+.cell-burned {
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.25) 0%, rgba(251, 192, 45, 0.15) 100%) !important;
+  color: #ffb74d !important;
+  font-weight: 900;
+  border: 1px solid rgba(255, 152, 0, 0.5) !important;
+}
+
+.cell-winner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cell-score {
+  font-weight: 600;
+}
+
+.total-row th,
+.total-row td {
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fff;
+  border-top: 2px solid var(--border-highlight);
+  border-bottom: none;
+}
+
+.col-actions {
+  width: 70px;
+}
+
+.btn-table-action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  transition: all 0.2s;
+}
+
+.btn-table-action:hover {
+  color: var(--uno-red);
+  background: rgba(229, 57, 53, 0.1);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   МОДАЛЬНІ ВІКНА
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 12, 18, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.modal-backdrop.open .modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #fff;
+}
+
+.modal-body {
+  padding: 22px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card-subtle);
+  flex-wrap: wrap;
+}
+
+.modal-footer .btn {
+  flex: 1 1 auto;
+  min-width: 110px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Кроки у модалці раунду */
+.round-step-box {
+  margin-bottom: 22px;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.step-badge {
+  width: 26px;
+  height: 26px;
+  background: var(--uno-yellow);
+  color: #111;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.step-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+/* Кнопки вибору переможця */
+.round-winner-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.winner-chip-btn {
+  background: var(--bg-card-subtle);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #fff;
+  font-weight: 700;
+}
+
+.winner-chip-btn:hover {
+  border-color: var(--border-highlight);
+  background: var(--bg-card-hover);
+}
+
+.winner-chip-btn.selected {
+  border-color: var(--uno-green);
+  background: rgba(46, 125, 50, 0.25);
+  box-shadow: 0 0 12px rgba(46, 125, 50, 0.4);
+}
+
+.winner-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Інпути очок інших гравців */
+.round-players-inputs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-score-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+
+.player-score-input-row.is-winner {
+  border-color: rgba(46, 125, 50, 0.5);
+  background: linear-gradient(180deg, rgba(46, 125, 50, 0.12) 0%, rgba(20, 25, 35, 0.4) 100%);
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.winner-score-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.winner-score-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.winner-tag {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #81c784;
+}
+
+.winner-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.winner-score-input {
+  width: 90px !important;
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: #81c784 !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  border: 2px solid rgba(129, 199, 132, 0.4) !important;
+}
+
+.input-unit {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.black-bonus-section {
+  background: rgba(10, 12, 18, 0.6);
+  border: 1px dashed rgba(251, 192, 45, 0.3);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+.bonus-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.bonus-subheading {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--uno-yellow);
+  letter-spacing: 0.3px;
+}
+
+.bonus-tip {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.bonus-chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-bonus-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-bonus-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-bonus-chip.active {
+  background: linear-gradient(135deg, rgba(229, 57, 53, 0.25) 0%, rgba(25, 118, 210, 0.25) 100%);
+  border-color: var(--uno-yellow);
+  color: #ffeb3b;
+  box-shadow: 0 0 10px rgba(251, 192, 45, 0.35);
+  font-weight: 800;
+}
+
+.btn-bonus-step-chip {
+  background: rgba(142, 36, 170, 0.25);
+  border: 1px solid rgba(142, 36, 170, 0.5);
+  color: #e1bee7;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-bonus-step-chip:hover {
+  background: rgba(142, 36, 170, 0.45);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.score-negative-text {
+  color: #4ade80 !important;
+  text-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+}
+
+.score-negative-cell {
+  color: #4ade80;
+  font-weight: 800;
+}
+
+.cell-winner.has-black-bonus {
+  background: linear-gradient(135deg, rgba(20, 20, 28, 0.95) 0%, rgba(30, 48, 38, 0.95) 100%) !important;
+  border: 1px solid #4ade80 !important;
+  color: #4ade80 !important;
+  font-weight: 900;
+  box-shadow: inset 0 0 8px rgba(74, 222, 128, 0.2);
+}
+
+.row-player-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.player-modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.player-modal-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.player-burn-calc-hint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.player-burn-calc-hint strong {
+  color: #ccc;
+  font-weight: 500;
+}
+
+.player-burn-calc-hint .highlight-fire,
+.player-burn-calc-hint.close-burn {
+  color: #ff9800;
+}
+
+.player-burn-calc-hint.close-burn strong {
+  color: #ffb74d;
+}
+
+.row-input-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.score-num-input {
+  width: 80px;
+  text-align: center;
+  padding: 8px 10px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.btn-open-calc {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-open-calc:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--uno-yellow);
+}
+
+.winner-zero-label {
+  color: #81c784;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 6px 12px;
+}
+
+.round-summary-badge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.round-summary-badge strong {
+  color: var(--uno-yellow);
+  font-size: 1.15rem;
+}
+
+/* ==========================================================================
+   КАЛЬКУЛЯТОР КАРТ UNO
+   ========================================================================== */
+
+.modal-calc {
+  max-width: 520px;
+}
+
+.calc-display {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.calc-formula {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-height: 20px;
+  word-break: break-all;
+  margin-bottom: 6px;
+}
+
+.calc-total-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.calc-label {
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.calc-big-sum {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--uno-yellow);
+  line-height: 1;
+}
+
+.calc-pts {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.calc-section-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 12px 0 8px;
+  letter-spacing: 0.5px;
+}
+
+.cards-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.number-cards-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.action-cards-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.wild-cards-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Кнопки карт */
+.uno-card-btn {
+  background: var(--bg-card-subtle);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.uno-card-btn:active {
+  transform: scale(0.92);
+}
+
+.num-card {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+}
+
+.num-card:hover {
+  border-color: #fff;
+  transform: translateY(-2px);
+}
+
+.card-plus2 {
+  background: linear-gradient(135deg, var(--uno-blue) 0%, var(--uno-blue-dark) 100%);
+}
+
+.card-reverse {
+  background: linear-gradient(135deg, var(--uno-red) 0%, var(--uno-red-dark) 100%);
+}
+
+.card-skip {
+  background: linear-gradient(135deg, var(--uno-green) 0%, var(--uno-green-dark) 100%);
+}
+
+.card-wild, .card-wild4 {
+  background: var(--wild-gradient);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.card-sub {
+  font-size: 0.65rem;
+  font-weight: 700;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.calc-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+/* ==========================================================================
+   МОДАЛКА ЗГОРЯННЯ ОЧОК (BURN ANNOUNCEMENT)
+   ========================================================================== */
+
+.burn-modal-backdrop {
+  z-index: 11000;
+}
+
+.modal-burn {
+  position: relative;
+  max-width: 400px;
+  width: 94%;
+  background: linear-gradient(170deg, #1a2a6c 0%, #b21f7a 55%, #fdbb2d 100%);
+  border: 3px solid #fff;
+  border-radius: 24px;
+  box-shadow:
+    0 0 60px rgba(253, 187, 45, 0.7),
+    0 0 30px rgba(178, 31, 122, 0.5),
+    inset 0 0 40px rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  animation: burnModalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes burnModalPop {
+  0%   { transform: scale(0.3) rotate(-8deg); opacity: 0; }
+  60%  { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.burn-stars-top,
+.burn-stars-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0 2px;
+}
+
+.burn-stars-bottom {
+  padding: 2px 0 10px;
+}
+
+.burn-star {
+  font-size: 1.6rem;
+  display: inline-block;
+  animation: starSpin 1.4s ease-in-out infinite alternate;
+}
+
+.burn-star:nth-child(2) { animation-delay: 0.2s; }
+.burn-star:nth-child(3) { animation-delay: 0.4s; animation-duration: 1s; }
+.burn-star:nth-child(4) { animation-delay: 0.1s; }
+.burn-star:nth-child(5) { animation-delay: 0.3s; animation-duration: 1.6s; }
+
+@keyframes starSpin {
+  0%   { transform: rotate(-20deg) scale(1); }
+  100% { transform: rotate(20deg) scale(1.3); }
+}
+
+.burn-body {
+  padding: 4px 20px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.burn-skull {
+  font-size: 3.5rem;
+  animation: partyBounce 0.5s ease-in-out 0.3s 4 alternate;
+}
+
+@keyframes partyBounce {
+  0%   { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.25) rotate(10deg); }
+}
+
+.burn-player-name {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 230, 0, 0.9), 0 2px 8px rgba(0,0,0,0.5);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.burn-subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+  margin: -4px 0;
+}
+
+.burn-score-pill {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 999px;
+  padding: 6px 20px;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+
+.burn-arrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0;
+}
+
+.burn-score-before {
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.5);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,0.7);
+  text-decoration-thickness: 3px;
+}
+
+.burn-arrow {
+  font-size: 1.5rem;
+  animation: arrowPulse 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes arrowPulse {
+  0%   { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.4) rotate(20deg); }
+}
+
+.burn-score-after {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #fdff6a;
+  text-shadow: 0 0 16px rgba(253,255,100,0.9), 0 0 32px rgba(255,230,0,0.6);
+  animation: zeroPulse 0.8s ease-in-out 0.6s infinite alternate;
+}
+
+@keyframes zeroPulse {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.2); }
+}
+
+.burn-announcement-text {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.burn-anulled {
+  font-size: 2rem;
+  color: #fdff6a;
+  text-shadow:
+    0 0 20px rgba(253, 255, 0, 1),
+    0 0 40px rgba(255, 230, 0, 0.8),
+    0 0 60px rgba(255, 200, 0, 0.5);
+  animation: anulledFlicker 0.4s ease-in-out infinite alternate;
+  display: inline-block;
+}
+
+@keyframes anulledFlicker {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.06); opacity: 0.9; }
+}
+
+.burn-sub {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.85rem;
+  margin-top: -4px;
+}
+
+.btn-burn-ok {
+  margin-top: 6px;
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fdbb2d, #f7971e);
+  border: none;
+  border-radius: 999px;
+  color: #1a1a2e;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 20px rgba(253, 187, 45, 0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-burn-ok:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 10px rgba(253, 187, 45, 0.3);
+}
+
+/* ==========================================================================
+   МОДАЛКА ПЕРЕМОГИ ТА КОНФЕТІ
+   ========================================================================== */
+
+.modal-victory {
+  position: relative;
+  max-width: 520px;
+  background: linear-gradient(180deg, #1c2230 0%, #121622 100%);
+  border-color: rgba(251, 192, 45, 0.5);
+  box-shadow: 0 0 40px rgba(251, 192, 45, 0.3);
+}
+
+.confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.victory-header {
+  border-bottom: none;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 15;
+}
+
+.victory-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--uno-yellow);
+  text-shadow: 0 0 14px rgba(251, 192, 45, 0.6);
+  letter-spacing: 1px;
+}
+
+.trophy-wrap {
+  position: relative;
+  display: inline-block;
+  margin: 10px auto 16px;
+  z-index: 15;
+}
+
+.big-trophy {
+  font-size: 5rem;
+  animation: bounceTrophy 1.5s infinite alternate ease-in-out;
+}
+
+.winner-crown {
+  position: absolute;
+  top: -16px;
+  right: -10px;
+  font-size: 2.2rem;
+  animation: rotateCrown 2s infinite ease-in-out;
+}
+
+@keyframes bounceTrophy {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px) scale(1.05); }
+}
+
+@keyframes rotateCrown {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(15deg); }
+}
+
+.winner-label {
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.winner-name {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+.winner-score-desc {
+  font-size: 0.95rem;
+  color: #81c784;
+  margin-bottom: 20px;
+}
+
+.final-standings-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.final-standings-card h4 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.final-standings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.final-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.final-item-row:last-child {
+  border-bottom: none;
+}
+
+.final-item-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.final-item-score {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.victory-footer {
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  z-index: 15;
+}
+
+/* ==========================================================================
+   ПРАВИЛА ТА ЕКСПОРТ
+   ========================================================================== */
+
+.rules-content h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: #fff;
+  margin: 14px 0 10px;
+}
+
+.rules-cards-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rules-cards-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+}
+
+.badge-card {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.95rem;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.badge-num { background: #374151; }
+.badge-action { background: var(--uno-blue); }
+.badge-wild { background: var(--wild-gradient); }
+
+.rules-cards-list .desc {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rules-cards-list .desc strong {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.rules-cards-list .desc span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.rules-variant {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.rules-variant h5 {
+  font-size: 0.95rem;
+  color: var(--uno-yellow);
+  margin-bottom: 6px;
+}
+
+.rules-variant p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Експорт */
+.share-textarea {
+  width: 100%;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 0.85rem;
+  resize: none;
+  outline: none;
+}
+
+.share-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 500px) {
+  .share-buttons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Історія */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-winner-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.history-meta-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Тост */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(50px);
+  background: rgba(28, 34, 48, 0.95);
+  border: 1px solid var(--uno-yellow);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 200;
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Дострокове завершення гри та кластер кнопок */
+.header-buttons-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-finish {
+  background: rgba(229, 57, 53, 0.15);
+  border: 1px solid rgba(229, 57, 53, 0.4);
+  color: #ff8a80;
+  transition: all 0.2s;
+  font-weight: 700;
+}
+
+.btn-finish:hover {
+  background: var(--uno-red);
+  color: #fff;
+  border-color: var(--uno-red-light);
+  transform: translateY(-1px);
+}
+
+/* Модалка перевищення ліміту (+200 або Фінал) */
+.modal-limit-exceeded {
+  max-width: 520px;
+  border-color: rgba(255, 152, 0, 0.55);
+  box-shadow: 0 0 35px rgba(255, 152, 0, 0.25);
+}
+
+.limit-exceeded-header h3 {
+  color: #ffb74d;
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+}
+
+.exceeded-icon-wrap {
+  margin: 6px auto 14px;
+}
+
+.exceeded-fire-icon {
+  font-size: 3.5rem;
+  display: inline-block;
+  animation: pulseAlert 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseAlert {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+.exceeded-msg {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.exceeded-msg strong {
+  color: #ffab40;
+}
+
+.exceeded-subtext {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.exceeded-choices-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-extend-choice,
+.btn-finish-choice {
+  text-align: left;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-extend-choice .btn-icon,
+.btn-finish-choice .btn-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.btn-extend-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.btn-extend-text strong {
+  font-size: 1rem;
+  color: #fff;
+  font-family: var(--font-display);
+}
+
+.btn-extend-sub {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+.btn-finish-choice:hover {
+  border-color: rgba(229, 57, 53, 0.6);
+  background: rgba(229, 57, 53, 0.12);
+}
+
+/* ==========================================================================
+   МЕДІА-ЗАПИТИ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .app-container {
+    padding: 8px 10px 30px;
+  }
+
+  .app-header {
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+
+  .uno-badge {
+    padding: 4px 10px;
+  }
+
+  .uno-text {
+    font-size: 1.2rem;
+  }
+
+  .logo-title h1 {
+    font-size: 0.95rem;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .modal-dialog {
+    max-height: 94vh;
+  }
+
+  .modal-header, .modal-body, .modal-footer {
+    padding: 14px 16px;
+  }
+
+  .number-cards-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+

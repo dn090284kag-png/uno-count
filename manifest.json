@@ -1,0 +1,18 @@
+{
+  "name": "UNO Score Tracker — Підрахунок балів",
+  "short_name": "UNO Count",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#11141c",
+  "theme_color": "#e53935",
+  "orientation": "portrait-primary",
+  "description": "Зручний веб-додаток для підрахунку очок у настільній грі UNO для компанії друзів",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
