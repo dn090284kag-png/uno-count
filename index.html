@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="UNO Score">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#11141c">
-  <meta name="description" content="Зручний додаток для підрахунку балів у настільній грі UNO для вас та ваших друзів. Забудьте про громіздкі гугл-таблиці!">
+  <meta name="description"
+    content="Зручний додаток для підрахунку балів у настільній грі UNO для вас та ваших друзів. Забудьте про громіздкі гугл-таблиці!">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23d32f2f'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black, sans-serif' font-size='38' font-style='italic' fill='%23ffeb3b'>UNO</text></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23d32f2f'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black, sans-serif' font-size='38' font-style='italic' fill='%23ffeb3b'>UNO</text></svg>">
   <title>UNO Score Tracker — Підрахунок балів</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,800&family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,800&family=Rubik:wght@500;700;900&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <div id="app" class="app-container">
     <!-- Верхня панель навігації -->
@@ -50,12 +57,12 @@
 
     <!-- Головна область перемикання екранів -->
     <main class="main-content">
-      
+
       <!-- ЕКРАН 1: Налаштування нової гри -->
       <section id="setupScreen" class="screen setup-screen active">
         <div class="card setup-card">
           <h2 class="section-title">🎮 Створення нової гри</h2>
-          
+
           <!-- Вибір режиму гри -->
           <div class="form-group">
             <label class="form-label">Режим гри:</label>
@@ -69,7 +76,7 @@
                     <span class="badge badge-popular">Популярно</span>
                   </div>
                   <p class="mode-desc">
-                    Переможець раунду отримує <strong>0</strong>. Інші рахують свої залишені карти. 
+                    Переможець раунду отримує <strong>0</strong>. Інші рахують свої залишені карти.
                     Хто перетинає ліміт — вибуває/завершує гру. <strong>Виграє той, у кого найменше балів!</strong>
                   </p>
                 </div>
@@ -83,7 +90,7 @@
                     <span class="mode-name">Класичний режим</span>
                   </div>
                   <p class="mode-desc">
-                    Переможець раунду забирає <strong>суму всіх карт інших гравців</strong>. 
+                    Переможець раунду забирає <strong>суму всіх карт інших гравців</strong>.
                     Перший, хто набере 500 балів — перемагає у грі!
                   </p>
                 </div>
@@ -99,7 +106,8 @@
               <button type="button" class="btn-preset" data-target="250">250</button>
               <button type="button" class="btn-preset" data-target="100">100 (Швидка)</button>
               <div class="custom-target-wrap">
-                <input type="number" id="customTargetScore" placeholder="Свій ліміт" min="10" max="9999" inputmode="numeric" class="input-field input-small">
+                <input type="number" id="customTargetScore" placeholder="Свій ліміт" min="10" max="9999"
+                  inputmode="numeric" class="input-field input-small">
               </div>
             </div>
           </div>
@@ -107,14 +115,16 @@
           <!-- Список гравців -->
           <div class="form-group">
             <label class="form-label">Гравці (від 2 до 12):</label>
-            
+
             <div class="add-player-row">
               <div class="avatar-select-wrap">
-                <button type="button" id="btnColorPicker" class="color-avatar-btn" style="background-color: #e53935;" title="Колір гравця">
+                <button type="button" id="btnColorPicker" class="color-avatar-btn" style="background-color: #e53935;"
+                  title="Колір гравця">
                   <span id="playerAvatarIcon">🔴</span>
                 </button>
               </div>
-              <input type="text" id="newPlayerName" class="input-field" placeholder="Ім'я гравця (наприклад: Артем)" maxlength="20" autocomplete="off">
+              <input type="text" id="newPlayerName" class="input-field" placeholder="Ім'я гравця (наприклад: Артем)"
+                maxlength="20" autocomplete="off">
               <button type="button" id="btnAddPlayer" class="btn btn-uno-red">
                 <span>➕ Додати</span>
               </button>
@@ -142,7 +152,7 @@
 
       <!-- ЕКРАН 2: Активна гра (Табло та Таблиця) -->
       <section id="gameScreen" class="screen game-screen">
-        
+
         <!-- Верхня панель гри: статус та статистика -->
         <div class="game-meta-bar">
           <div class="meta-item">
@@ -161,7 +171,8 @@
             <button id="btnToggleTableView" class="btn-compact">
               <span id="viewModeIcon">📋</span> <span id="viewModeText">Таблиця</span>
             </button>
-            <button id="btnEarlyFinish" class="btn-compact btn-finish" title="Достроково завершити гру та показати фінальні бали">
+            <button id="btnEarlyFinish" class="btn-compact btn-finish"
+              title="Достроково завершити гру та показати фінальні бали">
               <span>🏁 Завершити гру</span>
             </button>
           </div>
@@ -173,7 +184,7 @@
             <h3>🏆 Поточне становище</h3>
             <span class="sub-hint" id="leaderboardHint">Хто набере менше — перемагає</span>
           </div>
-          
+
           <div id="playersLeaderboard" class="leaderboard-grid">
             <!-- Динамічно генерується картка кожного гравця -->
           </div>
@@ -235,7 +246,7 @@
           <h3 id="roundModalTitle">📝 Запис раунду <span id="modalRoundNumber">1</span></h3>
           <button type="button" class="modal-close" data-close="roundModal">&times;</button>
         </div>
-        
+
         <div class="modal-body">
           <!-- Крок 1: Хто виграв раунд -->
           <div class="round-step-box">
@@ -372,7 +383,8 @@
           </h4>
           <p class="exceeded-subtext">
             Поточний ліміт був: <strong id="exceededCurrentLimit">500</strong> б.<br>
-            Ви можете продовжити партію (новий ліміт стане <strong>+200</strong>) або підбити фінальні підсумки прямо зараз.
+            Ви можете продовжити партію (новий ліміт стане <strong>+200</strong>) або підбити фінальні підсумки прямо
+            зараз.
           </p>
 
           <div class="exceeded-choices-box">
@@ -380,7 +392,8 @@
               <span class="btn-icon">🚀</span>
               <div class="btn-extend-text">
                 <strong>Продовжити гру (+200 до ліміту)</strong>
-                <span class="btn-extend-sub">Новий ліміт гри стане: <span id="newTargetScorePreview">700</span> б.</span>
+                <span class="btn-extend-sub">Новий ліміт гри стане: <span id="newTargetScorePreview">700</span>
+                  б.</span>
               </div>
             </button>
 
@@ -506,38 +519,43 @@
             <p>
               Гравець, який першим скинув усі карти ("UNO!"), отримує <strong>0 очок</strong> (або бонусний мінус).
               Усі інші рахують карти, які залишилися в них у руках. Бали підсумовуються від раунду до раунду.
-              Гра триває доти, доки хтось не набере ліміт (наприклад, 250 або 500). 
+              Гра триває доти, доки хтось не набере ліміт (наприклад, 250 або 500).
               <strong>Перемагає той, хто набрав найменше очок!</strong>
             </p>
           </div>
           <div class="rules-variant">
             <h5>🔥 Правило згорання очок (Рівно ліміт = 0):</h5>
             <p>
-              Якщо сума балів гравця стає <strong>рівно ${appState.targetScore || 500}</strong> (або обраний ліміт гри), 
-              усі його очки <strong>згорають і рахунок стає 0</strong>! 
-              Гравець продовжує гру з нулем штрафних. Додаток автоматично показує, скільки очок залишилося набрати кожному гравцю до згорання.
+              Якщо сума балів гравця стає <strong>рівно ${appState.targetScore || 500}</strong> (або обраний ліміт гри),
+              усі його очки <strong>згорають і рахунок стає 0</strong>!
+              Гравець продовжує гру з нулем штрафних. Додаток автоматично показує, скільки очок залишилося набрати
+              кожному гравцю до згорання.
             </p>
           </div>
           <div class="rules-variant">
             <h5>🖤 Бонусне правило: Закінчення чорною картою (-50, -100, -150...):</h5>
             <p>
-              Якщо переможець раунду скидає останню карту і закінчує гру <strong>чорною картою</strong> (Дика або Дика +4), 
+              Якщо переможець раунду скидає останню карту і закінчує гру <strong>чорною картою</strong> (Дика або Дика
+              +4),
               він отримує <strong>-50 балів</strong> за кожну скинуту чорну карту!
-              Ці очки віднімаються від його штрафного рахунку (можна піти в мінус, наприклад <strong>-50, -100, -150</strong>), що дає сильну перевагу в грі.
+              Ці очки віднімаються від його штрафного рахунку (можна піти в мінус, наприклад <strong>-50, -100,
+                -150</strong>), що дає сильну перевагу в грі.
             </p>
           </div>
           <div class="rules-variant">
             <h5>🚀 Перевищення ліміту та продовження гри (+200):</h5>
             <p>
-              Якщо хтось набрав більше ліміту (наприклад, 501+ балів), з'являється плашка вибору: 
-              ви можете <strong>продовжити партію (ліміт збільшиться на +200 балів)</strong> або завершити гру та підбити фінальні результати. 
-              Також ви в будь-який момент можете завершити партію достроково кнопкою <strong>«🏁 Завершити гру»</strong> у верхній панелі.
+              Якщо хтось набрав більше ліміту (наприклад, 501+ балів), з'являється плашка вибору:
+              ви можете <strong>продовжити партію (ліміт збільшиться на +200 балів)</strong> або завершити гру та
+              підбити фінальні результати.
+              Також ви в будь-який момент можете завершити партію достроково кнопкою <strong>«🏁 Завершити гру»</strong>
+              у верхній панелі.
             </p>
           </div>
           <div class="rules-variant">
             <h5>2. Класичні офіційні правила:</h5>
             <p>
-              Переможець раунду забирає суму очок з карт усіх своїх суперників. 
+              Переможець раунду забирає суму очок з карт усіх своїх суперників.
               Гра триває, поки хтось перший не набере 500 балів.
             </p>
           </div>
@@ -556,8 +574,9 @@
           <button type="button" class="modal-close" data-close="shareModal">&times;</button>
         </div>
         <div class="modal-body">
-          <p class="mb-2">Скопіюйте готовий текстовий підсумок для відправки в Telegram / Viber або завантажте CSV-файл для відкриття в Excel / Google Таблицях:</p>
-          
+          <p class="mb-2">Скопіюйте готовий текстовий підсумок для відправки в Telegram / Viber або завантажте CSV-файл
+            для відкриття в Excel / Google Таблицях:</p>
+
           <div class="form-group">
             <textarea id="shareTextarea" class="share-textarea" readonly rows="8"></textarea>
           </div>
@@ -593,7 +612,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" id="btnClearHistory" class="btn btn-ghost btn-small text-danger">Очистити всю історію</button>
+          <button type="button" id="btnClearHistory" class="btn btn-ghost btn-small text-danger">Очистити всю
+            історію</button>
           <button type="button" class="btn btn-uno-blue" data-close="historyModal">Закрити</button>
         </div>
       </div>
@@ -606,5 +626,5 @@
 
   <script src="app.js"></script>
 </body>
-</html>
 
+</html>

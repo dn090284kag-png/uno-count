@@ -705,7 +705,7 @@ function renderScoreTable(totals, roundBurns = {}) {
 
     appState.rounds.forEach((round, rIndex) => {
       const tr = document.createElement('tr');
-      
+
       let html = `<td class="col-round">Р${rIndex + 1}</td>`;
 
       appState.players.forEach(player => {
@@ -854,7 +854,7 @@ function setupRoundModalUI() {
 
 function selectRoundWinner(playerId) {
   roundModalState.selectedWinnerId = playerId;
-  
+
   if (appState.mode === 'penalty') {
     if (roundModalState.scores[playerId] === undefined || roundModalState.scores[playerId] > 0) {
       roundModalState.scores[playerId] = 0;
@@ -969,7 +969,7 @@ function renderRoundInputs() {
         const val = parseInt(e.target.value, 10);
         roundModalState.scores[player.id] = isNaN(val) ? 0 : val;
         updateRoundModalTotal();
-        
+
         if (isWinner && isPenalty) {
           row.querySelectorAll('.btn-bonus-chip').forEach(chip => {
             const chipVal = parseInt(chip.dataset.val, 10);
@@ -986,10 +986,10 @@ function renderRoundInputs() {
           const val = parseInt(chip.dataset.val, 10);
           roundModalState.scores[player.id] = val;
           if (numInput) numInput.value = val;
-          
+
           row.querySelectorAll('.btn-bonus-chip').forEach(c => c.classList.remove('active'));
           chip.classList.add('active');
-          
+
           updateRoundModalTotal();
         });
       });
@@ -1224,7 +1224,7 @@ function promptLimitExceeded(overLimitPlayers, ranked) {
   pendingRanked = ranked;
 
   const names = overLimitPlayers.map(p => `<strong>${escapeHtml(p.name)}</strong> (${p.total} б.)`).join(', ');
-  document.getElementById('exceededPlayerMessage').innerHTML = 
+  document.getElementById('exceededPlayerMessage').innerHTML =
     `Гравець ${names} перевищив(ла) ліміт гри!`;
   document.getElementById('exceededCurrentLimit').textContent = appState.targetScore;
   document.getElementById('newTargetScorePreview').textContent = appState.targetScore + 200;
@@ -1242,12 +1242,12 @@ function triggerGameOver(winner, ranked) {
 
   // Заповнення модалки
   document.getElementById('winnerName').textContent = winner.name;
-  
+
   if (appState.mode === 'penalty') {
-    document.getElementById('winnerScoreDetails').textContent = 
+    document.getElementById('winnerScoreDetails').textContent =
       `З результатом усього ${winner.total} балів за ${appState.rounds.length} раундів!`;
   } else {
-    document.getElementById('winnerScoreDetails').textContent = 
+    document.getElementById('winnerScoreDetails').textContent =
       `Першим подолав позначку в ${appState.targetScore} балів, набравши ${winner.total}!`;
   }
 
@@ -1392,7 +1392,7 @@ function downloadCSV() {
 
   const { totals } = getPlayerStats();
   let csv = '\uFEFF'; // UTF-8 BOM для коректного відкриття в українському Excel
-  
+
   // Заголовок таблиці
   csv += 'Раунд;' + appState.players.map(p => `"${p.name.replace(/"/g, '""')}"`).join(';') + '\r\n';
 
@@ -1453,7 +1453,7 @@ function renderHistoryModal() {
   let saved = [];
   try {
     saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.SAVED_GAMES) || '[]');
-  } catch (e) {}
+  } catch (e) { }
 
   if (saved.length === 0) {
     emptyMsg.classList.remove('hidden');
@@ -1597,7 +1597,7 @@ function showToast(message) {
 
 function escapeHtml(str) {
   if (!str) return '';
-  return str.replace(/[&<>"']/g, function(m) {
+  return str.replace(/[&<>"']/g, function (m) {
     switch (m) {
       case '&': return '&amp;';
       case '<': return '&lt;';
