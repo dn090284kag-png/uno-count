@@ -1,5 +1,5 @@
 // Service Worker для повної автономної (offline) роботи UNO Score Tracker
-const CACHE_NAME = 'uno-tracker-v5';
+const CACHE_NAME = 'uno-tracker-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

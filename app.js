@@ -796,12 +796,15 @@ function toggleTableView() {
   if (appState.activeView === 'cards') {
     appState.activeView = 'table';
     cardsSec.classList.add('hidden');
+    tableSec.classList.remove('hidden');
     tableSec.scrollIntoView({ behavior: 'smooth' });
     btnText.textContent = 'Картки';
     btnIcon.textContent = '🃏';
   } else {
     appState.activeView = 'cards';
     cardsSec.classList.remove('hidden');
+    tableSec.classList.add('hidden');
+    cardsSec.scrollIntoView({ behavior: 'smooth' });
     btnText.textContent = 'Таблиця';
     btnIcon.textContent = '📋';
   }
@@ -823,7 +826,7 @@ function restoreActiveGameView() {
     btnIcon.textContent = '🃏';
   } else {
     cardsSec.classList.remove('hidden');
-    tableSec.classList.remove('hidden');
+    tableSec.classList.add('hidden');
     btnText.textContent = 'Таблиця';
     btnIcon.textContent = '📋';
   }
