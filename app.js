@@ -40,7 +40,11 @@ let appState = {
   rounds: [],  // [{ id, roundNum, winnerId, scores: { playerId: number }, timestamp }]
   status: 'setup', // 'setup', 'playing', 'gameover'
   winnerId: null,
-  activeView: 'cards' // 'cards' або 'table'
+  activeView: 'cards', // 'cards' або 'table'
+  currentScreen: 'setupScreen',
+  screenScrollY: 0,
+  screenScrollPositions: {},
+  currentModal: null
 };
 
 // Тимчасовий стан модальних вікон
@@ -57,6 +61,8 @@ let calcState = {
   total: 0
 };
 
+let modalScrollPosition = null;
+
 let currentColorIndex = 0;
 
 // ==========================================================================
@@ -64,6 +70,13 @@ let currentColorIndex = 0;
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  updateModalViewport();
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', updateModalViewport);
+    window.visualViewport.addEventListener('scroll', updateModalViewport);
+  }
+  window.addEventListener('scroll', saveCurrentScreenScroll, { passive: true });
+  window.addEventListener('beforeunload', saveCurrentScreenScroll);
   setupEventListeners();
   loadSavedGameState();
   loadRecentPlayers();
@@ -247,7 +260,7 @@ function setupEventListeners() {
 
   // ====================== BURN MODAL ======================
   document.getElementById('btnCloseBurn').addEventListener('click', () => {
-    document.getElementById('burnModal').classList.remove('open');
+    closeModal('burnModal');
     burnShowing = false;
     // Show next burned player if any
     showNextBurn();
@@ -467,6 +480,17 @@ function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(screenId).classList.add('active');
 
+  if (appState.currentScreen && appState.currentScreen !== screenId) {
+    appState.screenScrollPositions[appState.currentScreen] = window.scrollY;
+  }
+  appState.currentScreen = screenId;
+  appState.screenScrollY = appState.screenScrollPositions[screenId] || 0;
+
+  window.requestAnimationFrame(() => {
+    window.scrollTo({ top: appState.screenScrollY, left: 0, behavior: 'auto' });
+  });
+  saveGameState();
+
   const btnShare = document.getElementById('btnShareGame');
   const btnNewPrompt = document.getElementById('btnNewGamePrompt');
 
@@ -568,6 +592,7 @@ function renderGameUI() {
 
   renderLeaderboard(ranked);
   renderScoreTable(totals, roundBurns);
+  restoreActiveGameView();
 
   // Кнопка скасування раунду
   const btnUndo = document.getElementById('btnUndoRound');
@@ -777,6 +802,28 @@ function toggleTableView() {
   } else {
     appState.activeView = 'cards';
     cardsSec.classList.remove('hidden');
+    btnText.textContent = 'Таблиця';
+    btnIcon.textContent = '📋';
+  }
+  saveGameState();
+}
+
+function restoreActiveGameView() {
+  const cardsSec = document.getElementById('leaderboardSection');
+  const tableSec = document.getElementById('scoreTableSection');
+  const btnText = document.getElementById('viewModeText');
+  const btnIcon = document.getElementById('viewModeIcon');
+
+  if (!cardsSec || !tableSec || !btnText || !btnIcon) return;
+
+  if (appState.activeView === 'table') {
+    cardsSec.classList.add('hidden');
+    tableSec.classList.remove('hidden');
+    btnText.textContent = 'Картки';
+    btnIcon.textContent = '🃏';
+  } else {
+    cardsSec.classList.remove('hidden');
+    tableSec.classList.remove('hidden');
     btnText.textContent = 'Таблиця';
     btnIcon.textContent = '📋';
   }
@@ -1494,10 +1541,21 @@ function renderHistoryModal() {
 
 function saveGameState() {
   try {
+    if (typeof roundModalState !== 'undefined') {
+      appState.roundModalState = roundModalState;
+    }
     localStorage.setItem(STORAGE_KEYS.CURRENT_GAME, JSON.stringify(appState));
   } catch (e) {
     console.error('Помилка збереження:', e);
   }
+}
+
+function saveCurrentScreenScroll() {
+  if (!appState.currentScreen) return;
+  appState.screenScrollPositions = appState.screenScrollPositions || {};
+  appState.screenScrollPositions[appState.currentScreen] = window.scrollY;
+  appState.screenScrollY = window.scrollY;
+  saveGameState();
 }
 
 function loadSavedGameState() {
@@ -1507,9 +1565,25 @@ function loadSavedGameState() {
       const parsed = JSON.parse(saved);
       if (parsed && parsed.players && parsed.players.length > 0) {
         appState = parsed;
+        appState.screenScrollPositions = appState.screenScrollPositions || {};
+        appState.screenScrollY = appState.screenScrollY || 0;
+        if (appState.roundModalState) {
+          roundModalState = appState.roundModalState;
+        }
+        appState.currentScreen = appState.currentScreen || (
+          appState.status === 'playing' || appState.status === 'gameover'
+            ? 'gameScreen'
+            : 'setupScreen'
+        );
         if (appState.status === 'playing' || appState.status === 'gameover') {
-          showScreen('gameScreen');
+          showScreen(appState.currentScreen === 'setupScreen' ? 'setupScreen' : 'gameScreen');
           renderGameUI();
+          if (appState.currentModal) {
+            if (appState.currentModal === 'roundModal' && roundModalState) {
+              setupRoundModalUI();
+            }
+            requestAnimationFrame(() => openModal(appState.currentModal));
+          }
           return;
         }
       }
@@ -1523,12 +1597,30 @@ function loadSavedGameState() {
   renderPlayersList();
   updateStartGameButton();
   updateColorPickerUI();
+  if (appState.currentModal) {
+    requestAnimationFrame(() => openModal(appState.currentModal));
+  }
 }
 
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
+    appState.currentModal = modalId;
+    saveGameState();
+    updateModalViewport();
+    if (!document.body.classList.contains('modal-open')) {
+      modalScrollPosition = {
+        x: window.scrollX,
+        y: window.scrollY
+      };
+      document.body.classList.add('modal-open');
+      document.body.style.top = `-${modalScrollPosition.y}px`;
+    }
     modal.classList.add('open');
+    const modalBody = modal.querySelector('.modal-body');
+    if (modalBody) {
+      modalBody.scrollTop = 0;
+    }
   }
 }
 
@@ -1536,7 +1628,27 @@ function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
     modal.classList.remove('open');
+    if (appState.currentModal === modalId) {
+      appState.currentModal = null;
+      saveGameState();
+    }
+    if (!document.querySelector('.modal-backdrop.open')) {
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      if (modalScrollPosition) {
+        window.scrollTo(modalScrollPosition.x, modalScrollPosition.y);
+        modalScrollPosition = null;
+      }
+    }
   }
+}
+
+function updateModalViewport() {
+  const viewport = window.visualViewport;
+  const height = viewport ? viewport.height : window.innerHeight;
+  const top = viewport ? viewport.offsetTop : 0;
+  document.documentElement.style.setProperty('--modal-viewport-height', `${height}px`);
+  document.documentElement.style.setProperty('--visual-viewport-top', `${top}px`);
 }
 
 // ==========================================================================
@@ -1576,7 +1688,7 @@ function showNextBurn() {
     dialog.style.animation = '';
   }
 
-  modal.classList.add('open');
+  openModal('burnModal');
 }
 
 
