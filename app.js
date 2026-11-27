@@ -795,7 +795,7 @@ function toggleTableView() {
 
   if (appState.activeView === 'cards') {
     appState.activeView = 'table';
-    cardsSec.classList.add('hidden');
+    cardsSec.classList.remove('hidden');
     tableSec.classList.remove('hidden');
     tableSec.scrollIntoView({ behavior: 'smooth' });
     btnText.textContent = 'Картки';
@@ -819,13 +819,13 @@ function restoreActiveGameView() {
 
   if (!cardsSec || !tableSec || !btnText || !btnIcon) return;
 
+  cardsSec.classList.remove('hidden');
+
   if (appState.activeView === 'table') {
-    cardsSec.classList.add('hidden');
     tableSec.classList.remove('hidden');
     btnText.textContent = 'Картки';
     btnIcon.textContent = '🃏';
   } else {
-    cardsSec.classList.remove('hidden');
     tableSec.classList.add('hidden');
     btnText.textContent = 'Таблиця';
     btnIcon.textContent = '📋';
